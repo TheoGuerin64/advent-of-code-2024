@@ -17,24 +17,23 @@ fn parse_input_file(path: &Path) -> Result<(Vec<i32>, Vec<i32>)> {
         }
     }
 
+    if list_1.len() != list_2.len() {
+        return Err(anyhow::anyhow!("Lists are not the same length"));
+    }
+
     return Ok((list_1, list_2));
 }
 
-fn step1(list1: &Vec<i32>, list2: &Vec<i32>) {
-    let mut list1 = list1.clone();
-    let mut list2 = list2.clone();
-    list1.sort();
-    list2.sort();
-
+fn step1(list1: &Vec<i32>, list2: &Vec<i32>) -> i32 {
     let mut distance = 0;
     for (i1, i2) in list1.iter().zip(list2) {
         distance += (i1 - i2).abs();
     }
 
-    println!("distance: {}", distance);
+    return distance;
 }
 
-fn step2(list1: &Vec<i32>, list2: &Vec<i32>) {
+fn step2(list1: &Vec<i32>, list2: &Vec<i32>) -> i32 {
     let mut list2_count: HashMap<i32, i32> = HashMap::new();
     for i in list2.iter() {
         if let Some(count) = list2_count.get(i) {
@@ -49,7 +48,7 @@ fn step2(list1: &Vec<i32>, list2: &Vec<i32>) {
         similarity += list2_count.get(i).unwrap_or(&0) * i;
     }
 
-    println!("similarity: {}", similarity);
+    return similarity;
 }
 
 fn main() {
@@ -57,6 +56,6 @@ fn main() {
     list1.sort();
     list2.sort();
 
-    step1(&list1, &list2);
-    step2(&list1, &list2);
+    println!("step1: {:?}", step1(&list1, &list2));
+    println!("step2: {:?}", step2(&list1, &list2));
 }
