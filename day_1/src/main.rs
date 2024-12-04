@@ -4,21 +4,17 @@ use std::io::{self, BufRead};
 use std::{fs::File, path::Path};
 
 fn parse_input_file(path: &Path) -> Result<(Vec<i32>, Vec<i32>)> {
-    let mut list_1: Vec<i32> = Vec::new();
-    let mut list_2: Vec<i32> = Vec::new();
-
     let file = File::open(path)?;
     let lines = io::BufReader::new(file).lines();
+
+    let mut list_1: Vec<i32> = Vec::new();
+    let mut list_2: Vec<i32> = Vec::new();
     for line in lines.flatten() {
         if let Some((first, second)) = line.split_once(' ') {
             let second_trimed = second.trim_start();
             list_1.push(first.parse::<i32>().unwrap());
             list_2.push(second_trimed.parse::<i32>().unwrap());
         }
-    }
-
-    if list_1.len() != list_2.len() {
-        return Err(anyhow::anyhow!("Lists are not the same length"));
     }
 
     return Ok((list_1, list_2));
