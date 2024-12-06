@@ -1,0 +1,21 @@
+use std::path::Path;
+
+use criterion::{criterion_group, criterion_main, Criterion};
+
+use advent_of_code_2024::{parse_input_file, step1, step2};
+
+fn bench_steps(c: &mut Criterion) {
+    let (list1, list2) = parse_input_file(Path::new("input.txt")).unwrap();
+
+    let mut group = c.benchmark_group("steps");
+    group.bench_function("step1", |b| {
+        b.iter(|| step1(list1.clone(), list2.clone()));
+    });
+    group.bench_function("step2", |b| {
+        b.iter(|| step2(&list1, &list2));
+    });
+    group.finish();
+}
+
+criterion_group!(benches, bench_steps);
+criterion_main!(benches);

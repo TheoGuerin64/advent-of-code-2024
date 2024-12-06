@@ -1,23 +1,9 @@
-use anyhow::Result;
-use std::io::{self, BufRead};
-use std::{fs::File, path::Path};
+use std::path::Path;
 
-fn parse_input_file(path: &Path) -> Result {
-    let file = File::open(path)?;
-    let lines = io::BufReader::new(file).lines();
-
-    for line in lines.flatten() {}
-
-    return Ok();
-}
-
-fn step1() {}
-
-fn step2() {}
+use advent_of_code_2024::{parse_input_file, step1, step2};
 
 fn main() {
     let data = parse_input_file(Path::new("input.txt")).unwrap();
-
-    println!("step1: {:?}", step1());
-    println!("step2: {:?}", step2());
+    println!("step1: {:?}", step1(&data));
+    println!("step2: {:?}", step2(&data));
 }
