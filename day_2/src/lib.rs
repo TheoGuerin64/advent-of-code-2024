@@ -1,16 +1,11 @@
 use anyhow::Result;
-use std::io::{self, BufRead};
-use std::{fs::File, path::Path};
 
 type Report = Vec<i32>;
 type Reports = Vec<Report>;
 
-pub fn parse_input_file(path: &Path) -> Result<Reports> {
-    let file = File::open(path)?;
-    let lines = io::BufReader::new(file).lines();
-
+fn parse(text: &str) -> Result<Reports> {
     let mut reports: Reports = Vec::new();
-    for line in lines.flatten() {
+    for line in text.lines() {
         let report: Report = line
             .split_whitespace()
             .map(|x| x.parse::<i32>().unwrap())
@@ -31,9 +26,11 @@ fn is_ascending_report_safe(report: &Report) -> bool {
     return true;
 }
 
-pub fn step1(reports: &Reports) -> i32 {
+pub fn step1(text: &str) -> i32 {
+    let reports = parse(text).unwrap();
+
     let mut safe_count = 0;
-    for report in reports {
+    for report in &reports {
         let reversed_report: Vec<i32> = report.iter().rev().copied().collect();
         if is_ascending_report_safe(report) || is_ascending_report_safe(&reversed_report) {
             safe_count += 1;
@@ -72,9 +69,11 @@ fn is_report_safe_with_one_margin(report: &Report) -> bool {
     return false;
 }
 
-pub fn step2(reports: &Reports) -> i32 {
+pub fn step2(text: &str) -> i32 {
+    let reports = parse(text).unwrap();
+
     let mut safe_count = 0;
-    for report in reports {
+    for report in &reports {
         if is_report_safe_with_one_margin(report) {
             safe_count += 1;
         }

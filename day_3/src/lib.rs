@@ -1,12 +1,3 @@
-use anyhow::Result;
-use std::fs::read_to_string;
-use std::path::Path;
-
-pub fn parse_input_file(path: &Path) -> Result<String> {
-    let text: String = read_to_string(path)?;
-    return Ok(text);
-}
-
 fn multiply(text: &str, mut index: usize) -> Option<i32> {
     index += 4;
 

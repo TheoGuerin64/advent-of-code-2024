@@ -1,9 +1,9 @@
-use std::path::Path;
+use std::fs::read_to_string;
 
-use advent_of_code_2024::{parse_input_file, step1, step2};
+use advent_of_code_2024::{step1, step2};
 
 fn main() {
-    let reports = parse_input_file(Path::new("input.txt")).unwrap();
-    println!("step1: {:?}", step1(&reports));
-    println!("step2: {:?}", step2(&reports));
+    let input = read_to_string("input.txt").expect("Input file not found");
+    println!("step1: {:?}", step1(&input));
+    println!("step2: {:?}", step2(&input));
 }

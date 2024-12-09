@@ -1,15 +1,10 @@
 use anyhow::Result;
 use std::collections::HashMap;
-use std::io::{self, BufRead};
-use std::{fs::File, path::Path};
 
-pub fn parse_input_file(path: &Path) -> Result<(Vec<i32>, Vec<i32>)> {
-    let file = File::open(path)?;
-    let lines = io::BufReader::new(file).lines();
-
+fn parse(text: &str) -> Result<(Vec<i32>, Vec<i32>)> {
     let mut list_1: Vec<i32> = Vec::new();
     let mut list_2: Vec<i32> = Vec::new();
-    for line in lines.flatten() {
+    for line in text.lines() {
         if let Some((first, second)) = line.split_once(' ') {
             let second_trimed = second.trim_start();
             list_1.push(first.parse::<i32>().unwrap());
@@ -20,7 +15,8 @@ pub fn parse_input_file(path: &Path) -> Result<(Vec<i32>, Vec<i32>)> {
     return Ok((list_1, list_2));
 }
 
-pub fn step1(mut list1: Vec<i32>, mut list2: Vec<i32>) -> i32 {
+pub fn step1(text: &str) -> i32 {
+    let (mut list1, mut list2) = parse(text).unwrap();
     list1.sort();
     list2.sort();
 
@@ -32,7 +28,9 @@ pub fn step1(mut list1: Vec<i32>, mut list2: Vec<i32>) -> i32 {
     return distance;
 }
 
-pub fn step2(list1: &Vec<i32>, list2: &Vec<i32>) -> i32 {
+pub fn step2(text: &str) -> i32 {
+    let (list1, list2) = parse(text).unwrap();
+
     let mut list2_count: HashMap<i32, i32> = HashMap::new();
     for i in list2.iter() {
         if let Some(count) = list2_count.get(i) {
