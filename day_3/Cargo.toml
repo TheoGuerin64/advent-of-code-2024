@@ -1,0 +1,12 @@
+[package]
+name = "advent-of-code-2024"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+criterion = "0.5.1"
+
+[[bench]]
+name = "steps"
+harness = false
